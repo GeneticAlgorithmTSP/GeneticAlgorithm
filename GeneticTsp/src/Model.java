@@ -3,10 +3,14 @@ import java.util.List;
 
 public class Model {
 
-    List<Integer> cities = new ArrayList<>();
+    List<Integer> cities;
     int solution;
 
-    Model(){ }
+    Model(){
+
+        cities = new ArrayList<>();
+        solution = 0;
+    }
 
     Model(Model model){
         this.cities = new ArrayList<>(model.cities);

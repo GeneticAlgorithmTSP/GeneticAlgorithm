@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Main {
 
@@ -15,21 +12,63 @@ public class Main {
         init();
         CreateParent();
 
-        for (int i=0;i<10000000;i++){
-              CreateChildren();
-              Mutation();
-              ParentSelection();
+        int count = 0;
+        for (int i=0;i<1000000;i++){
 
-            /*System.out.println("Selection");
+            CreateChildren();
+            //ParentSelection();
+
+            MutationInsert();
+            ParentSelection();
+            MutationSwap();
+            ParentSelection();
+
+            //MutationInsert();
+            //ParentSelection();
+            //MutationReverse();
+            //ParentSelection();
+/*
+            System.out.println("Selection");
             for (Model m:chromosomeParents)
                 System.out.println(m.cities+"\t"+m.solution);
             System.out.println("--------");
-            */
-            System.out.println(i);
+*/
+            //System.out.println(i);
+            count++;
         }
-        System.out.println("Selection");
+
+        System.out.println(count+".Iteration Mutation Swap");
+
         for (Model m:chromosomeParents)
             System.out.println(m.cities+"\t"+m.solution);
+        System.out.println("\nBest chromosome : \t"+GetBestChromosome(chromosomeParents).solution);
+        System.out.println("--------");
+
+        count = 0;
+        CreateParent();
+        for (int i=0;i<1000000;i++){
+
+            CreateChildren();
+            ParentSelection();
+            MutationInsert();
+            ParentSelection();
+            //MutationReverse();
+            //ParentSelection();
+/*
+            System.out.println("Selection");
+            for (Model m:chromosomeParents)
+                System.out.println(m.cities+"\t"+m.solution);
+            System.out.println("--------");
+*/
+            //System.out.println(i);
+            count++;
+        }
+
+        System.out.println(count+".Iteration Mutation Insert");
+
+        for (Model m:chromosomeParents)
+            System.out.println(m.cities+"\t"+m.solution);
+        System.out.println("\nBest chromosome : \t"+GetBestChromosome(chromosomeParents).solution);
         System.out.println("--------");
     }
 
@@ -89,33 +128,25 @@ public class Main {
 */
     }
 
-    private static void Mutation(){
 
-        Random random = new Random();
+    private static Model GetBestChromosome(List<Model> chromosomes) {
 
-        for (Model m: chromosomeChilds) {
+        Model best = new Model();
+        int minSolution = Integer.MAX_VALUE;
 
-            int city1, city2;
+        for (Model m: chromosomes)
+            if(m.solution < minSolution){
 
-            city1 = random.nextInt(citieSize);
-
-            do{
-                city2 = random.nextInt(citieSize);
-            }while (city1 == city2);
-
-            int temp = m.cities.get(city1);
-            m.cities.set(city1,m.cities.get(city2));
-            m.cities.set(city2,temp);
-        }
-
-        CalculateSolition(chromosomeChilds);
+                for (Integer i:m.cities
+                     ) {
+                    best.cities.add(i);
+                    //referans problemi var
+                }
+                best.solution = m.solution;
+            }
 
 
-        /*System.out.println("Mutasyon");
-        for (Model m:chromosomeChilds)
-            System.out.println(m.cities+"\t"+m.solution);
-        System.out.println("--------");
-*/
+        return best;
     }
 
     private static void CreateRandomTemplate(int zeroSize) {
@@ -243,6 +274,108 @@ public class Main {
     }
 
 
+
+    private static void MutationSwap(){
+
+        Random random = new Random();
+
+        for (Model m: chromosomeChilds) {
+
+            int city1, city2;
+
+            city1 = random.nextInt(citieSize);
+
+            do{
+                city2 = random.nextInt(citieSize);
+            }while (city1 == city2);
+
+            int temp = m.cities.get(city1);
+            m.cities.set(city1,m.cities.get(city2));
+            m.cities.set(city2,temp);
+        }
+
+        CalculateSolition(chromosomeChilds);
+
+
+        /*System.out.println("Mutasyon");
+        for (Model m:chromosomeChilds)
+            System.out.println(m.cities+"\t"+m.solution);
+        System.out.println("--------");
+*/
+    }
+
+    private static void MutationInsert(){
+
+        Random random = new Random();
+
+        for (Model m: chromosomeChilds) {
+
+            int city1, city2;
+
+            city1 = random.nextInt(citieSize);
+
+            do{
+                city2 = random.nextInt(citieSize);
+            }while (city1 == city2);
+
+
+            if(city1<city2){
+                m.cities.add(city1+1,m.cities.get(city2));
+                m.cities.remove(city2+1);
+            }
+            if(city1>city2){
+                m.cities.add(city2+1,m.cities.get(city1));
+                m.cities.remove(city1+1);
+            }
+
+        }
+
+        CalculateSolition(chromosomeChilds);
+
+
+        /*System.out.println("Mutasyon");
+        for (Model m:chromosomeChilds)
+            System.out.println(m.cities+"\t"+m.solution);
+        System.out.println("--------");
+*/
+    }
+
+    private static void MutationReverse(){
+        Random random = new Random();
+
+        for (Model m: chromosomeChilds) {
+
+            int city1, city2;
+
+            city1 = random.nextInt(citieSize);
+
+            do{
+                city2 = random.nextInt(citieSize);
+            }while (city1 == city2);
+
+
+            if(city1<city2){
+
+               List<Integer> gecici=m.cities.subList(city1,city2);
+               Collections.reverse(gecici);
+
+                for (int i = city1; i <gecici.size(); i++)
+                    m.cities.set(i,gecici.get(i));
+            }
+            if(city1>city2){
+
+                List<Integer> gecici=m.cities.subList(city2,city1);
+                Collections.reverse(gecici);
+
+                for (int i = city2; i <gecici.size(); i++)
+                    m.cities.set(i,gecici.get(i));
+
+            }
+
+        }
+
+        CalculateSolition(chromosomeChilds);
+    }
 
 
 }
