@@ -3,54 +3,31 @@ import java.util.*;
 public class Main {
 
     private static int[][] distance;
-    private static int citieSize,chromosomeSize,trueSize=0;
+    private static int citieSize,chromosomeSize=12,trueSize=0;
     private static List<Integer> cities;
     private static List<Model> chromosomeParents, chromosomeChilds;
     private static List<Boolean> template;
 
     public static void main(String[] args) {
+
         init();
-        CreateParent();
+        CreateParent(); //Cocuk olusturma
+        Iteration(30,5);
 
-        int count = 0;
+    }
+
+    private static void Iteration(int countIteration, int countMutation){
+
+        double startTime = System.currentTimeMillis();      //iterasyon kac sn sürdü bilmek icin
+        int i = 0;
         CreateParent();
-        for (int i=0;i<100000;i++){
+        for (i=0;i<countIteration;i++){
 
             CreateChildren();
             ParentSelection();
-            MutationInsert();
-            ParentSelection();
-            MutationReverse();
-            ParentSelection();
-/*
-            System.out.println("Selection");
-            for (Model m:chromosomeParents)
-                System.out.println(m.cities+"\t"+m.solution);
-            System.out.println("--------");
-*/
-            //System.out.println(i);
-            count++;
-        }
 
-        System.out.println(count+".Iteration Mutation Insert");
-
-        for (Model m:chromosomeParents)
-            System.out.println(m.cities+"\t"+m.solution);
-        System.out.println("\nBest chromosome : \t"+GetBestChromosome(chromosomeParents).solution);
-        System.out.println("--------");
-
-
-        count = 0;
-        CreateParent();
-        for (int i=0;i<120000;i++){
-
-            CreateChildren();
-            //ParentSelection();
-
-
-
-            for(int j=0; j<5; j++){
-
+            for(int j=0; j<countMutation; j++){     //Cesitli mutasyon teknikleri ile yerel aramalar yapiyoruz
+                                                    //Tek cesit ve/veya bir kez mutasyon yapmaktan daha faydalı oluyor
                 MutationSwap();
                 ParentSelection();
                 MutationInsert();
@@ -59,7 +36,6 @@ public class Main {
                 ParentSelection();
             }
 
-
 /*
             System.out.println("Selection");
             for (Model m:chromosomeParents)
@@ -67,105 +43,17 @@ public class Main {
             System.out.println("--------");
 */
             //System.out.println(i);
-            count++;
         }
+        double endTime = System.currentTimeMillis();
 
-        System.out.println(count+".Iteration Mutation Swap");
+        System.out.println("Süre : "+(endTime - startTime)/1000+"\n");
+        System.out.println(i+".Iteration\n");
 
         for (Model m:chromosomeParents)
             System.out.println(m.cities+"\t"+m.solution);
-        System.out.println("\nBest chromosome : \t"+GetBestChromosome(chromosomeParents).solution);
+        System.out.println("\nBest chromosome : \t"+GetBestChromosome(chromosomeParents).cities+"\t"+GetBestChromosome(chromosomeParents).solution);
         System.out.println("--------");
-
-    }
-
-    private static void CreateChildren() {
-
-        int index,crosCount=chromosomeSize/2;
-
-
-        chromosomeChilds = new ArrayList<>();
-
-        CreateRandomTemplate(trueSize);
-        Model newChild1 = new Model();
-        Model newChild2 = new Model();
-
-        for(int k=0; k<citieSize; k++){
-
-            newChild1.cities.add(-1000);
-            newChild2.cities.add(-1000);
-        }
-
-        //CrossingOver
-        for(int i=0;i<crosCount; i++){
-
-            List<Integer> temp_parent1 = new ArrayList<>(chromosomeParents.get(2*i).cities);
-            List<Integer> temp_parent2 = new ArrayList<>(chromosomeParents.get(2*i+1).cities);
-
-            for(int j=0;j<citieSize; j++) {
-
-                if (template.get(j)) {
-                    newChild1.cities.set(j, chromosomeParents.get(2*i).cities.get(j));
-                    temp_parent2.remove(chromosomeParents.get(2*i).cities.get(j));
-
-                    newChild2.cities.set(j, chromosomeParents.get(2*i+1).cities.get(j));
-                    temp_parent1.remove(chromosomeParents.get(2*i+1).cities.get(j));
-                }
-            }
-            index = 0;
-            for(int j=0;j<citieSize; j++) {
-
-                if (!template.get(j)) {
-                    newChild1.cities.set(j, temp_parent2.get(index));
-                    newChild2.cities.set(j, temp_parent1.get(index));
-                    index++;
-                }
-            }
-
-            chromosomeChilds.add(new Model(newChild1));
-            chromosomeChilds.add(new Model(newChild2));
-        }
-
-        CalculateSolition(chromosomeChilds);
-
-        /*System.out.println("Children");
-        for (Model m:chromosomeChilds)
-            System.out.println(m.cities+"\t"+m.solution);
-        System.out.println("--------");
-*/
-    }
-
-    private static Model GetBestChromosome(List<Model> chromosomes) {
-
-        Model best = new Model();
-        int minSolution = Integer.MAX_VALUE;
-
-        for (Model m: chromosomes)
-            if(m.solution < minSolution){
-
-                minSolution = m.solution;
-                best = m;
-            }
-
-
-        return best;
-    }
-
-    private static void CreateRandomTemplate(int zeroSize) {
-
-        template = new ArrayList<>();
-
-        for(int i=0; i<citieSize; i++){
-
-            if(i<zeroSize)
-                template.add(false);
-            else
-                template.add(true);
-
-        }
-
-        Collections.shuffle(template);
-    }
+    } //iterasyon fonksiyonu
 
     private static void init() {
 
@@ -206,27 +94,109 @@ public class Main {
 
         citieSize=distance.length;
 
-
         //sehirler
         cities = new ArrayList<>();
 
-        for(int i=0; i<citieSize; i++)
+        for(int i=0; i<citieSize; i++)  //1 den 21 e şehirleri tutan dizi
             cities.add(i);
-
-        //12 adet parent chromosomeozom olustur
-
-        chromosomeSize = 12;
     }
+
+    private static void CreateChildren() {
+
+        int index,crosCount=chromosomeSize/2;   //her 2 anneden 2 cocuk olacak 12 cocuk icin 6 kere bu islem yapilacak
+
+        chromosomeChilds = new ArrayList<>();
+
+        CreateRandomTemplate(trueSize);         //Sıra tabanlı crossingOver icin kullanilacak rastgele template
+        Model newChild1 = new Model();
+        Model newChild2 = new Model();
+
+        for(int k=0; k<citieSize; k++){         //index üzerinden cocuklara atama yapilacak bu yüzden cocuklara 21 tane sehir ekliyoruz, sehir indislerinin -1000 olasının önemi yok birsey olsun yeter
+
+            newChild1.cities.add(-1000);
+            newChild2.cities.add(-1000);
+        }
+
+        //CrossingOver
+        for(int i=0;i<crosCount; i++){
+
+            List<Integer> temp_parent1 = new ArrayList<>(chromosomeParents.get(2*i).cities);
+            List<Integer> temp_parent2 = new ArrayList<>(chromosomeParents.get(2*i+1).cities);
+
+            for(int j=0;j<citieSize; j++) {
+
+                if (template.get(j)) {                                                  //templatedeki true degerli indexler parent1 den atanıyor
+                    newChild1.cities.set(j, chromosomeParents.get(2*i).cities.get(j));
+                    temp_parent2.remove(chromosomeParents.get(2*i).cities.get(j));      //false degerler  parent2 nin sırasına göre eklenmeli, siralama ile uğraşmaktansa parent1 den ekledigimiz sehirleri parent2 den silip kalanları gereken indislere koyuyoruz
+
+                    newChild2.cities.set(j, chromosomeParents.get(2*i+1).cities.get(j));
+                    temp_parent1.remove(chromosomeParents.get(2*i+1).cities.get(j));
+                }
+            }
+            index = 0;
+            for(int j=0;j<citieSize; j++) {
+
+                if (!template.get(j)) {                                     //false degerdeki indisleri atama islemi
+                    newChild1.cities.set(j, temp_parent2.get(index));
+                    newChild2.cities.set(j, temp_parent1.get(index));
+                    index++;
+                }
+            }
+
+            chromosomeChilds.add(new Model(newChild1));             //yeni cocukları cocuk listemize atıyoruz
+            chromosomeChilds.add(new Model(newChild2));
+        }
+
+        CalculateSolition(chromosomeChilds);
+
+        /*System.out.println("Children");
+        for (Model m:chromosomeChilds)
+            System.out.println(m.cities+"\t"+m.solution);
+        System.out.println("--------");
+*/
+    }   //CrossingOver ile cocuk yapma
+
+    private static Model GetBestChromosome(List<Model> chromosomes) {
+
+        Model best = new Model();
+        int minSolution = Integer.MAX_VALUE;
+
+        for (Model m: chromosomes)
+            if(m.solution < minSolution){
+
+                minSolution = m.solution;
+                best = m;
+            }
+
+
+        return best;
+    }   //kromozom listesinden en iyi kromozomu bulma
+
+    private static void CreateRandomTemplate(int zeroSize) {
+
+        template = new ArrayList<>();
+
+        for(int i=0; i<citieSize; i++){
+
+            if(i<zeroSize)
+                template.add(false);
+            else
+                template.add(true);
+
+        }
+
+        Collections.shuffle(template);
+    }   //CrossingOver icin kullanılacak rastgele template
 
     private static void CreateParent(){
 
         chromosomeParents = new ArrayList<>();
         //parent olusturma
-        List<Integer> cities_temp = new ArrayList<>(cities);
+        List<Integer> cities_temp = new ArrayList<>(cities);    //21 tane sehirden olusan bir liste olusturuyoruz ancak bu sıralı, karıstırma islemi asagıda
 
         for (int i=0; i<chromosomeSize; i++){
 
-            Collections.shuffle(cities_temp);
+            Collections.shuffle(cities_temp);             //annelerin rastgele bir yol belirtmesi icin karıstırıyoruz
 
             Model m = new Model();
             m.cities.addAll(cities_temp);
@@ -240,7 +210,7 @@ public class Main {
             System.out.println(m.cities+"\t"+m.solution);
         System.out.println("--------");
 */
-    }
+    }   //Anne olusturma
 
     private static void CalculateSolition(List<Model> models){
 
@@ -251,7 +221,7 @@ public class Main {
                 cost += distance[model.cities.get(i)][model.cities.get(i+1)];
             model.solution = cost;
         }
-    }
+    }       //Modele ait yolun maliyetinin hesaplanması
 
     private static void ParentSelection(){
 
@@ -281,8 +251,31 @@ public class Main {
         System.out.println("--------");
     */
     }
+    //iyi olan cocukları anne olarak atama
+    private static void ParentSelection2(){     //aynı sonular parent listesinde olabilir
 
-    private static void MutationSwap(){
+        for (int i = 0; i < chromosomeSize; i++) {
+
+            if(chromosomeParents.get(i).solution > chromosomeChilds.get(i).solution){
+
+                    chromosomeParents.get(i).solution = chromosomeChilds.get(i).solution;
+                    chromosomeParents.get(i).cities.clear();
+                    chromosomeParents.get(i).cities.addAll(chromosomeChilds.get(i).cities);
+                    //chromosomeParents.set(i,chromosomeChilds.get(i));
+
+                    //Model model=chromosomeParents.get(i);
+                    //System.out.println(model.cities+" \t Solution : "+model.solution);
+            }
+        }
+
+        /*System.out.println("Selection");
+        for (Model m:chromosomeParents)
+            System.out.println(m.cities+"\t"+m.solution);
+        System.out.println("--------");
+    */
+    }
+
+    private static void MutationSwap(){     //Mutasyon(rastgele 2 şehrin yeri değiştirilerek)
 
         Random random = new Random();
 
@@ -294,7 +287,7 @@ public class Main {
 
             do{
                 city2 = random.nextInt(citieSize);
-            }while (city1 == city2);
+            }while (city1 == city2);                //yerdeğiştirilecek 2 şehir birbirinden farklı olsun
 
             int temp = m.cities.get(city1);
             m.cities.set(city1,m.cities.get(city2));
@@ -309,9 +302,9 @@ public class Main {
             System.out.println(m.cities+"\t"+m.solution);
         System.out.println("--------");
 */
-    }
+    }   //swap mutasyon
 
-    private static void MutationInsert(){
+    private static void MutationInsert(){   //Mutasyon (rastgele seç,len 2 şehirden 2.sini 1.nin sağına getirerek)
 
         Random random = new Random();
 
@@ -323,7 +316,7 @@ public class Main {
 
             do{
                 city2 = random.nextInt(citieSize);
-            }while (city1 == city2);
+            }while (city1 == city2);                //2 şehir birbirinden farklı olsun
 
 
             if(city1<city2){
@@ -347,7 +340,7 @@ public class Main {
 */
     }
 
-    private static void MutationReverse(){
+    private static void MutationReverse(){  //Mutasyon (rastgele seçilen 2 şehir arası ters çevirilerek )
         Random random = new Random();
 
         for (Model m: chromosomeChilds) {
@@ -358,7 +351,7 @@ public class Main {
 
             do{
                 city2 = random.nextInt(citieSize);
-            }while (city1 == city2);
+            }while (city1 == city2);                    //2 şehir birbirinden farklı olsun
 
 
             if(city1<city2){
