@@ -15,9 +15,11 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="115">
-              <caret line="14" column="19" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="19" />
+            <state relative-caret-position="204">
+              <caret line="18" column="72" selection-start-line="18" selection-start-column="72" selection-end-line="18" selection-end-column="72" />
               <folding>
+                <element signature="method#main#0;class#Main#0" />
+                <element signature="method#Iteration#0;class#Main#0" />
                 <element signature="method#init#0;class#Main#0" />
                 <element signature="method#CreateChildren#0;class#Main#0" />
                 <element signature="method#GetBestChromosome#0;class#Main#0" />
@@ -38,7 +40,7 @@
         <entry file="file://$PROJECT_DIR$/src/Model.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="119">
-              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+              <caret line="7" selection-start-line="7" selection-end-line="7" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -79,8 +81,9 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="-7" />
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="130" />
+    <option name="y" value="-16" />
     <option name="width" value="974" />
     <option name="height" value="1047" />
   </component>
@@ -89,9 +92,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="AndroidView" />
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -157,15 +160,16 @@
       <workItem from="1526732837056" duration="254000" />
       <workItem from="1526733122371" duration="9880000" />
       <workItem from="1526849315102" duration="69000" />
-      <workItem from="1526893108357" duration="11847000" />
+      <workItem from="1526893108357" duration="13179000" />
+      <workItem from="1526927947386" duration="394000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="47469000" />
+    <option name="totallyTimeSpent" value="49195000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="0" width="974" height="1047" extended-state="0" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
@@ -178,11 +182,11 @@
       <window_info anchor="right" id="Maven Projects" order="3" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.46908316" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.24287222" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24217118" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12083333" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -214,7 +218,7 @@
           <option name="timeStamp" value="105" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="107" />
+      <option name="time" value="109" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
@@ -226,9 +230,43 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="19" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="19" />
+          <folding>
+            <element signature="method#main#0;class#Main#0" />
+            <element signature="method#Iteration#0;class#Main#0" />
+            <element signature="method#init#0;class#Main#0" />
+            <element signature="method#CreateChildren#0;class#Main#0" />
+            <element signature="method#GetBestChromosome#0;class#Main#0" />
+            <element signature="method#CreateRandomTemplate#0;class#Main#0" />
+            <element signature="method#CreateParent#0;class#Main#0" />
+            <element signature="method#CalculateSolition#0;class#Main#0" />
+            <element signature="method#ParentSelection#0;class#Main#0" />
+            <element signature="method#ParentSelection2#0;class#Main#0" />
+            <element signature="method#MutationSwap#0;class#Main#0" />
+            <element signature="method#MutationInsert#0;class#Main#0" />
+            <element signature="method#MutationReverse#0;class#Main#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Model.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="6392">
           <caret line="376" column="5" selection-start-line="376" selection-start-column="5" selection-end-line="376" selection-end-column="5" />
           <folding>
+            <element signature="method#main#0;class#Main#0" />
+            <element signature="method#Iteration#0;class#Main#0" />
             <element signature="method#init#0;class#Main#0" />
             <element signature="method#CreateChildren#0;class#Main#0" />
             <element signature="method#GetBestChromosome#0;class#Main#0" />
@@ -259,6 +297,8 @@
         <state relative-caret-position="391">
           <caret line="26" column="14" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="14" />
           <folding>
+            <element signature="method#main#0;class#Main#0" />
+            <element signature="method#Iteration#0;class#Main#0" />
             <element signature="method#init#0;class#Main#0" />
             <element signature="method#CreateChildren#0;class#Main#0" />
             <element signature="method#GetBestChromosome#0;class#Main#0" />
@@ -289,6 +329,8 @@
         <state relative-caret-position="357">
           <caret line="21" selection-start-line="21" selection-end-line="21" />
           <folding>
+            <element signature="method#main#0;class#Main#0" />
+            <element signature="method#Iteration#0;class#Main#0" />
             <element signature="method#init#0;class#Main#0" />
             <element signature="method#CreateChildren#0;class#Main#0" />
             <element signature="method#GetBestChromosome#0;class#Main#0" />
@@ -309,6 +351,8 @@
         <state relative-caret-position="697">
           <caret line="45" column="12" lean-forward="true" selection-start-line="45" selection-start-column="12" selection-end-line="45" selection-end-column="12" />
           <folding>
+            <element signature="method#main#0;class#Main#0" />
+            <element signature="method#Iteration#0;class#Main#0" />
             <element signature="method#init#0;class#Main#0" />
             <element signature="method#CreateChildren#0;class#Main#0" />
             <element signature="method#GetBestChromosome#0;class#Main#0" />
@@ -329,6 +373,8 @@
         <state relative-caret-position="935">
           <caret line="55" column="22" lean-forward="true" selection-start-line="55" selection-start-column="22" selection-end-line="55" selection-end-column="22" />
           <folding>
+            <element signature="method#main#0;class#Main#0" />
+            <element signature="method#Iteration#0;class#Main#0" />
             <element signature="method#init#0;class#Main#0" />
             <element signature="method#CreateChildren#0;class#Main#0" />
             <element signature="method#GetBestChromosome#0;class#Main#0" />
@@ -357,7 +403,7 @@
     <entry file="file://$PROJECT_DIR$/src/Model.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
-          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+          <caret line="7" selection-start-line="7" selection-end-line="7" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -366,9 +412,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="14" column="19" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="19" />
+        <state relative-caret-position="204">
+          <caret line="18" column="72" selection-start-line="18" selection-start-column="72" selection-end-line="18" selection-end-column="72" />
           <folding>
+            <element signature="method#main#0;class#Main#0" />
+            <element signature="method#Iteration#0;class#Main#0" />
             <element signature="method#init#0;class#Main#0" />
             <element signature="method#CreateChildren#0;class#Main#0" />
             <element signature="method#GetBestChromosome#0;class#Main#0" />

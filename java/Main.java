@@ -12,11 +12,11 @@ public class Main {
 
         init();
         CreateParent(); //Cocuk olusturma
-        Iteration(150000,5);
+        Iteration(20000,5);
 
     }
 
-    private static void Iteration(int countIteration, int countMutation){   //iterasyon fonksiyonu
+    private static void Iteration(int countIteration, int countMutation){
 
         double startTime = System.currentTimeMillis();      //iterasyon kac sn sürdü bilmek icin
         int i = 0;
@@ -53,7 +53,7 @@ public class Main {
             System.out.println(m.cities+"\t"+m.solution);
         System.out.println("\nBest chromosome : \t"+GetBestChromosome(chromosomeParents).cities+"\t"+GetBestChromosome(chromosomeParents).solution);
         System.out.println("--------");
-    }
+    } //iterasyon fonksiyonu
 
     private static void init() {
 
@@ -101,7 +101,7 @@ public class Main {
             cities.add(i);
     }
 
-    private static void CreateChildren() {       //CrossingOver ile cocuk yapma
+    private static void CreateChildren() {
 
         int index,crosCount=chromosomeSize/2;   //her 2 anneden 2 cocuk olacak 12 cocuk icin 6 kere bu islem yapilacak
 
@@ -154,9 +154,9 @@ public class Main {
             System.out.println(m.cities+"\t"+m.solution);
         System.out.println("--------");
 */
-    }
+    }   //CrossingOver ile cocuk yapma
 
-    private static Model GetBestChromosome(List<Model> chromosomes) {     //kromozom listesinden en iyi kromozomu bulma
+    private static Model GetBestChromosome(List<Model> chromosomes) {
 
         Model best = new Model();
         int minSolution = Integer.MAX_VALUE;
@@ -170,9 +170,9 @@ public class Main {
 
 
         return best;
-    }
+    }   //kromozom listesinden en iyi kromozomu bulma
 
-    private static void CreateRandomTemplate(int zeroSize) {           //CrossingOver icin kullanılacak rastgele template
+    private static void CreateRandomTemplate(int zeroSize) {
 
         template = new ArrayList<>();
 
@@ -186,9 +186,9 @@ public class Main {
         }
 
         Collections.shuffle(template);
-    }
+    }   //CrossingOver icin kullanılacak rastgele template
 
-    private static void CreateParent(){        //Anne olusturma
+    private static void CreateParent(){
 
         chromosomeParents = new ArrayList<>();
         //parent olusturma
@@ -210,9 +210,9 @@ public class Main {
             System.out.println(m.cities+"\t"+m.solution);
         System.out.println("--------");
 */
-    }
+    }   //Anne olusturma
 
-    private static void CalculateSolition(List<Model> models){      //Modele ait yolun maliyetinin hesaplanması
+    private static void CalculateSolition(List<Model> models){
 
         for (Model model: models) {
 
@@ -221,7 +221,7 @@ public class Main {
                 cost += distance[model.cities.get(i)][model.cities.get(i+1)];
             model.solution = cost;
         }
-    }
+    }       //Modele ait yolun maliyetinin hesaplanması
 
     private static void ParentSelection(){
 
@@ -302,7 +302,7 @@ public class Main {
             System.out.println(m.cities+"\t"+m.solution);
         System.out.println("--------");
 */
-    }
+    }   //swap mutasyon
 
     private static void MutationInsert(){   //Mutasyon (rastgele seç,len 2 şehirden 2.sini 1.nin sağına getirerek)
 
